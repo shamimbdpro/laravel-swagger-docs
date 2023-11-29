@@ -1,0 +1,517 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel",
+        "description": "Documentation for the Application API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Laravel Server #1"
+        }
+    ],
+    "paths": {
+        "/user": {
+            "get": {
+                "summary": "",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "user"
+                ]
+            }
+        },
+        "/posts": {
+            "get": {
+                "summary": "List of posts",
+                "description": "Get list of post in paginated way",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "current_page",
+                                        "data",
+                                        "first_page_url",
+                                        "last_page",
+                                        "last_page_url",
+                                        "path",
+                                        "per_page",
+                                        "total"
+                                    ],
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "$ref": "#/components/schemas/Post"
+                                            }
+                                        },
+                                        "first_page_url": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/posts?page=1"
+                                        },
+                                        "from": {
+                                            "type": "integer",
+                                            "example": 16
+                                        },
+                                        "last_page": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "last_page_url": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/posts?page=10"
+                                        },
+                                        "next_page_url": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/posts?page=3"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/posts"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/posts?page=1"
+                                        },
+                                        "to": {
+                                            "type": "integer",
+                                            "example": 30
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 150
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "tags": [
+                    "posts"
+                ]
+            },
+            "post": {
+                "summary": "Create new post",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "201": {
+                        "description": "New created post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "slug",
+                                    "image",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 2
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "posts"
+                ]
+            },
+            "put": {
+                "summary": "Create new post",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "updated post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "image",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 2
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "publish_date": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "posts"
+                ]
+            }
+        },
+        "/posts/{id}": {
+            "get": {
+                "summary": "Find a post of id",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Post"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "posts"
+                ]
+            },
+            "delete": {
+                "summary": "Delete post",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "204": {
+                        "description": ""
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "posts"
+                ]
+            }
+        },
+        "/users/users/{id}": {
+            "patch": {
+                "summary": "Update user data",
+                "description": "",
+                "deprecated": false,
+                "responses": {
+                    "200": {
+                        "description": "updated user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "(Unauthorized) Invalid or missing Access Token"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 2
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "minLength": 8
+                                    },
+                                    "website": {
+                                        "type": "string",
+                                        "format": "uri"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        }
+    },
+    "tags": [],
+    "components": {
+        "schemas": {
+            "Post": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string",
+                        "description": "text(65535)",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "datetime",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "bigint",
+                        "nullable": false,
+                        "example": 1793615906
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "string(255): the url of post image",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "string(255)",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "publish_date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "date",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "description": "string(255)",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "datetime",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "bigint",
+                        "nullable": false,
+                        "example": 1725777737
+                    },
+                    "user": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "required": [
+                    "content",
+                    "id",
+                    "image",
+                    "name",
+                    "slug",
+                    "user_id"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "datetime",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "string(255)",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "datetime",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "bigint",
+                        "nullable": false,
+                        "example": 1630911095
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "string(255)",
+                        "nullable": false,
+                        "example": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "datetime",
+                        "nullable": true,
+                        "example": "string"
+                    },
+                    "website": {
+                        "type": "string",
+                        "description": "string(255): Author website",
+                        "nullable": false,
+                        "example": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "id",
+                    "name",
+                    "website"
+                ]
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
